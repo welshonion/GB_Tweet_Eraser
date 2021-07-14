@@ -8,6 +8,9 @@ import os,json
 from requests_oauthlib import OAuth1Session
 from urllib.parse import parse_qsl
 import psycopg2
+from datetime import datetime
+
+import databaseIO
 
 TOKEN_PATH= 'token.json'
 
@@ -29,6 +32,9 @@ USER_ID = token["USER_ID"]
 
 ##################################################################
 
+DELETE_WORD = '参戦ID'
+DELETE_VERIFY_WORD = '参加者募集'
+
 'urlをあらかじめ取得しておく'
 
 baseurl = "https://api.twitter.com/1.1/statuses/"
@@ -44,6 +50,11 @@ global last_tweet_id
 last_tweet_id = 0
 
 DATABASE_URL = 'postgres://cewvthrmwlgxjh:36cb9c4496cf192da18811578c866ae8daf8c33de921470519049713bd1e5a8d@ec2-23-23-92-204.compute-1.amazonaws.com:5432/d7oq82ardlsbp6'
+
+def deleteManager():
+
+    return
+
 
 def autoManager():
     session = OAuth1Session(CK,CS,AT,ATS)
@@ -119,7 +130,7 @@ def getTimelines(session):
         'exclude_replies':False,
         #'exclude_replies': json.get('exclude_replies',False),
         'since_id':last_tweet_id,
-        'count':100,
+        'count':200,
         'trim_user':False,
         'tweet_mode':'extended',
         }
@@ -131,7 +142,7 @@ def getTimelines(session):
         'exclude_replies':False,
         #'exclude_replies': json.get('exclude_replies',False),
         #'since_id':last_tweet_id,
-        'count':100,
+        'count':200,
         'trim_user':False,
         'tweet_mode':'extended',
         }
@@ -145,11 +156,19 @@ def getTimelines(session):
         firstline  = True
 
         for line in timelines:
-            if('イズミヤ' in line['full_text']):
-                print('イズミヤ～～')
+            if(DELETE_WORD in line['full_text']):
+                
+                print(DELETE_WORD)
                 print(line['id'])
+
+                if(DELETE_VERIFY_WORD in line['full_text']):
+                    print(DELETE_VERIFY_WORD)
+                    delete_tweet(session,line['id'])
+
             print(line['user']['name']+'::'+line['full_text'])
             print(line['created_at'])
+            created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')
+            print(created_at)
             print("***************************************")
 
 
@@ -280,6 +299,27 @@ def func_write_last_id():
         print(last_tweet_id)
 
     db.close()
+
+def delete_tweet(session,tweet_id):
+    tweet_url = "https://api.twitter.com/1.1/statuses/update.json"
+    destroy_url = "https://api.twitter.com/1.1/statuses/destroy/" + str(tweet_id) + ".json"
+
+
+    try:
+        res = session.post(destroy_url)
+
+        if res.status_code == 200:
+            print("Destroy Success.")
+        else:
+            print("Destroy Failed. :%d"% res.status_code)
+    except:
+        print('Destory Failed.:exception')
+
+    
+
+    return
+
+
 
 if __name__ == '__main__':
 

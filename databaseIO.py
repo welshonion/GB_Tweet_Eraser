@@ -1,91 +1,109 @@
 # -*- coding: utf-8 -*-
-import sqlite3
+#import sqlite3
+#import psycopg2
+
+
+#import json, datetime, time, sys, os, re
+#from requests_oauthlib import OAuth1Session
+#from urllib.parse import parse_qsl
+#from abc import ABCMeta, abstractmethod
+#from glob import iglob
+#import psycopg2
+
+import os
 import psycopg2
-
-
-import json, datetime, time, sys, os, re
-from requests_oauthlib import OAuth1Session
-from urllib.parse import parse_qsl
-from abc import ABCMeta, abstractmethod
-from glob import iglob
-import psycopg2
-
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
+db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
 
-def func_delete():
-    db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
-    'db = sqlite3.connect("kkk.db")'
+def auth_adduser(user_id, at, ats, delete_time):
+    #db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
     cursor = db.cursor()
-    cursor.execute('delete from last_id')
 
-    db.commit()
-    sql = 'select * from last_id'
+    sql = 'CREATE TABLE IF NOT EXISTS userinfo (user_id varchar(60),at varchar(60),ats varchar(60),deletetime int);'
+    
     cursor.execute(sql)
-    for row in cursor:
-        print("****")
-        print(row[0])
-        print(row[1])
-
-    db.close()
-
-
-def func_drop():
-    db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
-    'db = sqlite3.connect("kkk.db")'
-    cursor = db.cursor()
-    cursor.execute('DROP TABLE IF EXISTS last_id;')
-
     db.commit()
 
-    print("success drop")
-
-    db.close()
-
-def func_exist():
-    db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
-    'db = sqlite3.connect("kkk.db")'
-    cursor = db.cursor()
-
-    cursor.execute('CREATE TABLE IF NOT EXISTS last_id(lid varchar(25),name bigint)')
-
-    num = 114514810
-    last_tweet_id = 1223372036854775807
+    #num = 114514810
+    #last_tweet_id = 1223372036854775807
     "str_last_tweet_id = 3147483647"
 
-    cursor.execute("INSERT INTO last_id (lid, name) VALUES ('lid_last_id', %d);" % last_tweet_id)
+    insert = "INSERT INTO userinfo (user_id, at, ats, deletetime) VALUES ('%s', '%s', '%s', %d);" % (user_id, at, ats, delete_time)
 
-    "cursor.execute('insert into last_id (lid, name) values (%s, %s)',('lid_last_id',num))"
+    user_id, at, ats = auth_checkuser(user_id)
 
-    db.commit()
+    if user_id == None:
+        cursor.execute(insert)
+        db.commit()
 
-    sql = 'select * from last_id'
-    cursor.execute(sql)
+
+    #sql = 'select * from userinfo'
+    #cursor.execute(sql)
     "sql = 'select * from last_id where lid = ""First message""'"
-    "for row in cursor.execute(sql):"
-    for row in cursor:
+    "cursor.execute(sql):"
+    """for row in cursor:
         print("****")
         print(row[0])
-        print(row[1])
+        print(row[1])"""
 
-    db.close()
+    #db.close()
 
-def func_read():
-    db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
-    'db = sqlite3.connect("kkk.db")'
+    return
+
+def auth_checkuser(user_id):
+    #db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
     cursor = db.cursor()
 
-    sql = 'SELECT * FROM last_id'
-    cursor.execute(sql)
-    "sql = 'select * from last_id where lid = ""First message""'"
-    "for row in cursor.execute(sql):"
-    for row in cursor:
-        print("****")
-        print(row[0])
-        print(row[1])
+    sql = 'select * from userinfo;'
 
-    db.close()
+    cursor.execute(sql)
+
+    for row in cursor:
+        if row[0] == user_id:
+            return row[1],row[2],row[3]
+
+    return None, None, None
+
+def auth_getalluser():
+    cursor = db.cursor()
+
+    sql = 'select * from userinfo;'
+
+    cursor.execute(sql)
+
+    return cursor
+
+def auth_deleteuser(user_id):
+    #db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
+    cursor = db.cursor()
+    cursor.execute("delete from userinfo where user_id = '%s';" % (user_id))
+
+    db.commit()
+    #db.close()
+
+    return
+
+def auth_deleteall():
+    #db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
+    cursor = db.cursor()
+    cursor.execute('delete from userinfo;')
+
+    db.commit()
+    #db.close()
+
+    return
+
+def auth_drop():
+    #db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
+    cursor = db.cursor()
+    cursor.execute('DROP TABLE IF EXISTS userinfo;')
+
+    db.commit()
+    #db.close()
+
+    return
 
 
 

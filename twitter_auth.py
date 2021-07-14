@@ -5,15 +5,13 @@
 
 import config
 
-import os,json
+import os, json
 from requests_oauthlib import OAuth1Session
 from urllib.parse import parse_qsl
 from flask import Flask, render_template, request, redirect
-
-TOKEN_PATH= 'token.json'
+import databaseIO
 
 app = Flask(__name__)
-
 
 ##################################################################
 ## トークン関連
@@ -23,17 +21,10 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 #CK = config.CONSUMER_KEY
 #CS = config.CONSUMER_SECRET
 
-OT = ""
-OV = ""
-
 ##################################################################
 
 
 def user_authentication():
-
-    with open(TOKEN_PATH, mode='r') as f:
-        token=json.load(f)
-    f.close()
 
     #Authenticate_URLを取得
     #ユーザー連携後にoauth_tokenとoauth_verifierを取得
@@ -53,32 +44,15 @@ def user_authentication():
 
     authenticate_url = "https://api.twitter.com/oauth/authenticate"
     authorize_url = "https://api.twitter.com/oauth/authorize"
-    #authenticate_endpoint = "%s?oauth_token=%s" \
-    #%(authorize_url,request_token['oauth_token'])
 
-    authenticate_endpoint = authorize_url + "?oauth_token=" + request_token['oauth_token'] 
+    authorize_endpoint = "{}?oauth_token={}".format(authorize_url,request_token['oauth_token'])
 
-    asdf = authorize_url + "?oauth_token=" + request_token['oauth_token'] 
+    print(authorize_endpoint)
 
-    print(authenticate_endpoint)
-
-    token["AUTHENTICATE_URL"] = authenticate_endpoint
-    token["OAUTH_TOKEN"] = ""
-    token["OAUTH_VERIFIER"] = ""
-
-    with open(TOKEN_PATH, mode='w') as f:
-        json.dump(token,f,indent=4)
-    f.close()
-
-
-    return authenticate_endpoint # Googleにリダイレクトする
+    return authorize_endpoint # Googleにリダイレクトする
 
 
 def user_verified():
-
-    with open(TOKEN_PATH, mode='r') as f:
-        token=json.load(f)
-    f.close()
 
     #ユーザーのoauthtoken
     OT = request.args.get('oauth_token')
@@ -105,18 +79,17 @@ def user_verified():
 
     print(access_token)
 
-    token["ACCESS_TOKEN"] = access_token['oauth_token']
-    token["ACCESS_TOKEN_SECRET"] = access_token['oauth_token_secret']
-    token["USER_ID"] = access_token['user_id']
 
-    with open(TOKEN_PATH, mode='w') as f:
-        json.dump(token,f,indent=4)
-    f.close()
+    AT = access_token['oauth_token']
+    ATS = access_token['oauth_token_secret']
+    USER_ID = access_token['user_id']
+
+    databaseIO.auth_adduser(USER_ID, AT, ATS, 30)
 
 
-    twitter = OAuth1Session(CK, CS, token["ACCESS_TOKEN"], token["ACCESS_TOKEN_SECRET"])
+    twitter = OAuth1Session(CK, CS, AT, ATS)
 
-    params = {"user_id" : token["USER_ID"]}
+    params = {"user_id" : USER_ID}
 
     response = twitter.get(user_show_url, params=params)
 
@@ -138,8 +111,8 @@ def user_verified():
 
 @app.route('/')
 def index():
-    title = "ようこそ"
-    message = "こんにちはハローワールド"
+    title = "タイトル"
+    message = "メッセージ"
     return render_template('index.html', message=message,title=title)
 
 if __name__ == '__main__':

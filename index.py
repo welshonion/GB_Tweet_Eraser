@@ -74,6 +74,11 @@ def verified():
 def delete_job():
     twitter_delete.autoManager()
 
+@scheduler.scheduled_job('interval',minutes=20)
+#@twische.scheduled_job('cron',minute=13,hour=16)
+def asdf():
+    print("20min")
+
 @scheduler.scheduled_job('interval',seconds=60)
 #@twische.scheduled_job('cron',minute=13,hour=16)
 def reply_job():
