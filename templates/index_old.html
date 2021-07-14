@@ -1,0 +1,55 @@
+<!--{% block content %}-->
+<!-- Form
+================================================== -->
+<!--
+<div class="form">
+
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <p class="lead">
+               {% if name %}
+               "{{name}}"の投稿に成功しました！
+               {% else %}
+               {{message}}
+               {% endif %}
+            </p>
+            <form action="/post" method="post" class="form-inline">
+               <label for="name">ツイート内容</label>
+               <input type="text" class="form-control" id="name" name="formtweettext" placeholder="いまどうしてる？">
+               <button type="submit" class="btn btn-default">送信する</button>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}-->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>getUserTimelines</title>
+</head>
+<body>
+  <h1>getUserTimelines</h1>
+  {% if timeline == False %}
+    <p><a href="{{ url_for('twitter_auth') }}">連携アプリ認証</a></p>
+  {% else %}
+    <!-- 取得した timeline のテキストを表示 -->
+    {% for status in timeline %}
+      <p>{{ status.user.name}}</p>
+      <p>{{ status.text }}</p>
+      <p>{{ status.created_at}}</p>
+
+
+      <hr>
+    {% endfor %}
+  {% endif %}
+  <footer>
+    Apr/30/2019 AM 00:21<p />
+  </footer>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% block content %}
+<!-- Form
+================================================== -->
+<div class="form">
+
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <p class="lead">
+               {% if name %}
+               "{{name}}"の投稿に成功しました！
+               {% else %}
+               {{message}}
+               {% endif %}
+            </p>
+            <form action="/post" method="post" class="form-inline">
+               <label for="name">ツイート内容</label>
+               <input type="text" class="form-control" id="name" name="formtweettext" placeholder="いまどうしてる？">
+               <button type="submit" class="btn btn-default">送信する</button>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}
