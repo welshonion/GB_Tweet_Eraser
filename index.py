@@ -5,8 +5,10 @@
 #import os, json, config
 #import requests
 
+import config
+config.write_environ()
 
-import json, config
+import os,json
 from flask import Flask, render_template, request, redirect, url_for, session
 from requests_oauthlib import OAuth1Session
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -30,8 +32,10 @@ f.close()
 ##################################################################
 ## トークン関連
 
-CK = config.CONSUMER_KEY
-CS = config.CONSUMER_SECRET
+CK = os.environ.get('CONSUMER_KEY', '0')
+CS = os.environ.get('CONSUMER_SECRET', '0')
+#CK = config.CONSUMER_KEY
+#CS = config.CONSUMER_SECRET
 
 AT = token["ACCESS_TOKEN"]
 ATS = token["ACCESS_TOKEN_SECRET"]

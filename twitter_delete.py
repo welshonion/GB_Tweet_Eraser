@@ -2,7 +2,9 @@
 
 #ユーザーのツイートを表示
 
-import json, config
+import config
+
+import os,json
 from requests_oauthlib import OAuth1Session
 from urllib.parse import parse_qsl
 import psycopg2
@@ -16,8 +18,10 @@ f.close()
 ##################################################################
 ## トークン関連
 
-CK = config.CONSUMER_KEY
-CS = config.CONSUMER_SECRET
+CK = os.environ.get('CONSUMER_KEY', '0')
+CS = os.environ.get('CONSUMER_SECRET', '0')
+#CK = config.CONSUMER_KEY
+#CS = config.CONSUMER_SECRET
 
 AT = token["ACCESS_TOKEN"]
 ATS = token["ACCESS_TOKEN_SECRET"]

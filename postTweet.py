@@ -2,7 +2,9 @@
 
 #ツイートを投稿する
 
-import json, config
+import config
+
+import os,json
 from requests_oauthlib import OAuth1Session
 
 TOKEN_PATH= 'token.json'
@@ -14,8 +16,10 @@ f.close()
 ##################################################################
 ## トークン関連
 
-CK = config.CONSUMER_KEY
-CS = config.CONSUMER_SECRET
+CK = os.environ.get('CONSUMER_KEY', '0')
+CS = os.environ.get('CONSUMER_SECRET', '0')
+#CK = config.CONSUMER_KEY
+#CS = config.CONSUMER_SECRET
 
 AT = token["ACCESS_TOKEN"]
 ATS = token["ACCESS_TOKEN_SECRET"]
@@ -32,10 +36,10 @@ def tweet():
 
 
     print("内容")
-    #tweet = input(">>")
+    tweet = input(">>")
     print("***************************************")
 
-    tweet = "イズミヤ～"
+    #tweet = "イズミヤ～"
 
     params = {"status" : tweet}
 
@@ -47,3 +51,4 @@ def tweet():
         print("Failed. :%d"% res.status_code)
 
     return 
+    

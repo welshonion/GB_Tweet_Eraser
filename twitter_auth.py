@@ -3,7 +3,9 @@
 #OauthTokenを取得
 #仮想環境のアクティベート忘れずに
 
-import json, config
+import config
+
+import os,json
 from requests_oauthlib import OAuth1Session
 from urllib.parse import parse_qsl
 from flask import Flask, render_template, request, redirect
@@ -13,11 +15,19 @@ TOKEN_PATH= 'token.json'
 app = Flask(__name__)
 
 
-#CK、CSでDeveloperのサービスに接続
-CK = config.CONSUMER_KEY
-CS = config.CONSUMER_SECRET
+##################################################################
+## トークン関連
+
+CK = os.environ.get('CONSUMER_KEY', '0')
+CS = os.environ.get('CONSUMER_SECRET', '0')
+#CK = config.CONSUMER_KEY
+#CS = config.CONSUMER_SECRET
+
 OT = ""
 OV = ""
+
+##################################################################
+
 
 def user_authentication():
 
