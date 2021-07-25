@@ -5,8 +5,8 @@
 #import os, json, config
 #import requests
 
-import config
-config.write_environ()
+#import config
+#config.write_environ()
 
 import os,json
 from flask import Flask, render_template, request, redirect, url_for, session
@@ -72,12 +72,7 @@ def verified():
 @scheduler.scheduled_job('interval',minutes=1)
 #@twische.scheduled_job('cron',minute=13,hour=16)
 def delete_job():
-    twitter_delete.autoManager()
-
-@scheduler.scheduled_job('interval',minutes=20)
-#@twische.scheduled_job('cron',minute=13,hour=16)
-def asdf():
-    print("20min")
+    twitter_delete.deleteManager()
 
 @scheduler.scheduled_job('interval',seconds=60)
 #@twische.scheduled_job('cron',minute=13,hour=16)

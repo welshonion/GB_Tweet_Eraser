@@ -26,9 +26,9 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 #CK = config.CONSUMER_KEY
 #CS = config.CONSUMER_SECRET
 
-AT = token["ACCESS_TOKEN"]
-ATS = token["ACCESS_TOKEN_SECRET"]
-USER_ID = token["USER_ID"]
+#AT = token["ACCESS_TOKEN"]
+#ATS = token["ACCESS_TOKEN_SECRET"]
+#USER_ID = token["USER_ID"]
 
 ##################################################################
 
@@ -49,21 +49,30 @@ global last_tweet_id
 
 last_tweet_id = 0
 
-DATABASE_URL = 'postgres://cewvthrmwlgxjh:36cb9c4496cf192da18811578c866ae8daf8c33de921470519049713bd1e5a8d@ec2-23-23-92-204.compute-1.amazonaws.com:5432/d7oq82ardlsbp6'
+
+database = []
 
 def deleteManager():
+    global database
+
+    #データベースからユーザー情報を取得して格納
+    database = databaseIO.auth_getalluser()
+
+    #各ユーザーに対してユーザータイムラインを確認して削除
+    for row in database:
+        deleteUserTweet(row)
 
     return
 
+def deleteUserTweet(userinfo):
 
-def autoManager():
-    session = OAuth1Session(CK,CS,AT,ATS)
+    session = OAuth1Session(CK, CS, userinfo[1], userinfo[2])
 
     'checkAccessLimit():回数制限の問い合わせ'
     checkAccessLimit(session)
     '上で勝手にスリープまでやってくれる'
     'getTimelines():タイムラインの取得'
-    getTimelines(session)
+    checkFromTL(session)
 
     return 
 
@@ -104,49 +113,19 @@ def checkAccessLimit(session):
             break
 
 
-def getTimelines(session):
+def checkFromTL(session):
 
     global last_tweet_id
     #global db
 
-    try:
-        db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
-        print("db connect")
-        cursor = db.cursor()
-        print('cursor')
-
-        cursor.execute('CREATE TABLE IF NOT EXISTS last_id(lid varchar(20),name varchar(20))')
-        print('create_table')
-        db.close()
-    except:
-        print('db connect error')
-
-    try:
-        func_read_last_id()
-
-        '取得してprint表示'
-        params = {
-        "user_id":USER_ID,
-        'exclude_replies':False,
-        #'exclude_replies': json.get('exclude_replies',False),
-        'since_id':last_tweet_id,
-        'count':200,
-        'trim_user':False,
-        'tweet_mode':'extended',
-        }
-        print('getDataBase')
-
-    except:
-        '取得してprint表示'
-        params = {
+    params = {
         'exclude_replies':False,
         #'exclude_replies': json.get('exclude_replies',False),
         #'since_id':last_tweet_id,
         'count':200,
         'trim_user':False,
         'tweet_mode':'extended',
-        }
-        print('func_read_last_id error or first')
+    }
 
     res_htl = session.get(user_timeline_url, params = params)
 
@@ -171,56 +150,28 @@ def getTimelines(session):
             print(created_at)
             print("***************************************")
 
-
-        """for line in timelines:
-            print('***************************************')
-            print(line['user']['name']+'::'+line['full_text'])
-            print(line['user']['id'])
-            print(line['created_at'])
-
-            if firstline is True:
-                try:
-                    last_tweet_id = line['id']
-                    print(last_tweet_id)
-                    func_write_last_id()
-                except:
-                    print('func_write_last_id error')
-
-                firstline = False
-
-
-
-            jud_in_mention = False
-
-            for mentions in line['entities']['user_mentions']:
-                print('ID is ')
-                #print(mentions['id_str'])
-                if mentions['id_str'] == USER_ID:
-                    jud_in_mention = True
-                    break
-
-            if line['in_reply_to_user_id_str'] == USER_ID or jud_in_mention == True:
-                if line['user']['id'] != USER_ID:
-                    tweettext='@'+line['user']['screen_name']+'\nクソリプはやめてね！'
-                    params_post = {
-                    'status':tweettext,
-                    'in_reply_to_status_id':line['id']
-                    }
-                    res_post = session.post(posttweet_url,params = params_post)
-                    if res_post.status_code == 200:
-                        print('tweet success')
-                    else:
-                        print('tweet failed')
-                        print(res_post.status_code)
-
-            "print('***************************************')"""
-
     else:
         print('Failed:%d' % res_htl.status_code)
 
 
+def delete_tweet(session,tweet_id):
+    tweet_url = "https://api.twitter.com/1.1/statuses/update.json"
+    destroy_url = "https://api.twitter.com/1.1/statuses/destroy/" + str(tweet_id) + ".json"
 
 
+    try:
+        res = session.post(destroy_url)
+
+        if res.status_code == 200:
+            print("Destroy Success.")
+        else:
+            print("Destroy Failed. :%d"% res.status_code)
+    except:
+        print('Destory Failed.:exception')
+
+    return
+
+"""
 def func_read_last_id():
     global last_tweet_id
 
@@ -300,24 +251,7 @@ def func_write_last_id():
 
     db.close()
 
-def delete_tweet(session,tweet_id):
-    tweet_url = "https://api.twitter.com/1.1/statuses/update.json"
-    destroy_url = "https://api.twitter.com/1.1/statuses/destroy/" + str(tweet_id) + ".json"
-
-
-    try:
-        res = session.post(destroy_url)
-
-        if res.status_code == 200:
-            print("Destroy Success.")
-        else:
-            print("Destroy Failed. :%d"% res.status_code)
-    except:
-        print('Destory Failed.:exception')
-
-    
-
-    return
+"""
 
 
 
@@ -327,47 +261,6 @@ if __name__ == '__main__':
     '関数呼び出し用'
 
     'autoManager呼び出し'
-    autoManager()
+    deleteManager()
 
 
-
-
-
-
-
-def oyo():
-    twitter = OAuth1Session(CK,CS,AT,ATS)
-
-    params = {
-    "user_id":USER_ID,
-    'exclude_replies':True,
-    #'include_rts': json.get('include_rts',False),
-    'count':10,
-    'trim_user':False,
-    'tweet_mode':'extended',
-    }
-
-    response = twitter.get(user_timeline_url, params=params)
-
-    results = json.loads(response.text)
-
-    #print(results)
-
-    #res = twitter.get(url, params =params)
-
-    if response.status_code == 200:
-        timelines = json.loads(response.text)
-        for line in timelines:
-            if('イズミヤ' in line['full_text']):
-                print('イズミヤ～～')
-            print(line['user']['name']+'::'+line['full_text'])
-            print(line['created_at'])
-            print("***************************************")
-    else:
-        print("Failed:%d" %response.status_code)
-
-    #if __name__ == '__main__':
-    #
-    #    "タイムライン取得する関数を呼ぶ"
-
-    return
