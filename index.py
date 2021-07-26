@@ -37,9 +37,9 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 #CK = config.CONSUMER_KEY
 #CS = config.CONSUMER_SECRET
 
-AT = token["ACCESS_TOKEN"]
-ATS = token["ACCESS_TOKEN_SECRET"]
-USER_ID = token["USER_ID"]
+#AT = token["ACCESS_TOKEN"]
+#ATS = token["ACCESS_TOKEN_SECRET"]
+#USER_ID = token["USER_ID"]
 
 ##################################################################
 
