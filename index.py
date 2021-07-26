@@ -43,7 +43,7 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 
 ##################################################################
 
-twitter = OAuth1Session(CK, CS, AT, ATS)
+#twitter = OAuth1Session(CK, CS, AT, ATS)
 posttweet_url = 'https://api.twitter.com/1.1/statuses/update.json'
 
 @app.route('/')
@@ -106,7 +106,7 @@ def index():
     return render_template('tweet.html',
     message=message,title=title)
 
-@app.route('/post', methods=['GET','POST'])
+"""@app.route('/post', methods=['GET','POST'])
 def post():
     title='ツイート'
     if request.method == 'POST':
@@ -126,5 +126,5 @@ def post():
             message=message,title=title)
     else:
         #ERRORでリダイレクトする場合
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))"""
 
