@@ -30,7 +30,8 @@ def user_authentication():
     #ユーザー連携後にoauth_tokenとoauth_verifierを取得
 
     #oauth_callback = "https://twitter.com"
-    oauth_callback = "http://127.0.0.1:5000/verified/"
+    #oauth_callback = "http://127.0.0.1:5000/verified/"
+    oauth_callback = "https://gb-tweet-eraser.herokuapp.com/verified/"
 
     twitter = OAuth1Session(CK,CS)
     request_token_url = "https://api.twitter.com/oauth/request_token"
