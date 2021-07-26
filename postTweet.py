@@ -2,16 +2,16 @@
 
 #ツイートを投稿する
 
-import config
+#import config
 
 import os,json
 from requests_oauthlib import OAuth1Session
 
-TOKEN_PATH= 'token.json'
+"""TOKEN_PATH= 'token.json'
 
 with open(TOKEN_PATH, mode='r') as f:
     token=json.load(f)
-f.close()
+f.close()"""
 
 ##################################################################
 ## トークン関連
@@ -21,9 +21,9 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 #CK = config.CONSUMER_KEY
 #CS = config.CONSUMER_SECRET
 
-AT = token["ACCESS_TOKEN"]
-ATS = token["ACCESS_TOKEN_SECRET"]
-USER_ID = token["USER_ID"]
+#AT = token["ACCESS_TOKEN"]
+#ATS = token["ACCESS_TOKEN_SECRET"]
+#USER_ID = token["USER_ID"]
 
 ##################################################################
 
