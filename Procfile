@@ -1,2 +1,2 @@
-web: python index.py
-clock: python scheduler.py
+web: gunicorn index
+clock: python scheduler
