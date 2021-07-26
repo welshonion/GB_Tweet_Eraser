@@ -2,7 +2,7 @@
 
 #ユーザーのツイートを表示
 
-import config
+#import config
 
 import os,json
 from requests_oauthlib import OAuth1Session

@@ -3,7 +3,7 @@
 #OauthTokenを取得
 #仮想環境のアクティベート忘れずに
 
-import config
+#import config
 
 import os, json
 from requests_oauthlib import OAuth1Session

@@ -41,4 +41,6 @@ def get():
 
 #add()
 
-get()
+#get()
+
+deleteall()
