@@ -86,12 +86,12 @@ if __name__ == '__main__':
 
 
 
-@app.route('/tweet')
+"""@app.route('/tweet')
 def index():
     title = 'ようこそ'
     message = 'ツイート内容を入力してください'
     return render_template('tweet.html',
-    message=message,title=title)
+    message=message,title=title)"""
 
 """@app.route('/post', methods=['GET','POST'])
 def post():
