@@ -1,1 +1,2 @@
-clock: python index.py
+web: python index.py
+clock:scheduler.py
