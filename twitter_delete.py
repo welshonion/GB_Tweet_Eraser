@@ -12,11 +12,11 @@ from datetime import datetime
 
 import databaseIO
 
-TOKEN_PATH= 'token.json'
+"""TOKEN_PATH= 'token.json'
 
 with open(TOKEN_PATH, mode='r') as f:
     token=json.load(f)
-f.close()
+f.close()"""
 
 ##################################################################
 ## トークン関連
