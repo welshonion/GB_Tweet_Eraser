@@ -11,7 +11,7 @@
 import os,json
 from flask import Flask, render_template, request, redirect, url_for, session
 from requests_oauthlib import OAuth1Session
-from apscheduler.schedulers.background import BackgroundScheduler
+#from apscheduler.schedulers.background import BackgroundScheduler
 
 import twitter_auth
 import twitter_delete
@@ -19,7 +19,7 @@ import postTweet
 
 app = Flask(__name__)
 
-scheduler = BackgroundScheduler(daemon = True)
+#scheduler = BackgroundScheduler(daemon = True)
 
 #app.config['SECRET_KEY'] = os.urandom(24)
 
@@ -68,19 +68,6 @@ def verified():
     #return redirect('http://127.0.0.1:5000/')
     return render_template('verified.html',is_verified = is_verified,name=name,screen_name=screen_name)
 
-
-@scheduler.scheduled_job('interval',minutes=1)
-#@twische.scheduled_job('cron',minute=13,hour=16)
-def delete_job():
-    twitter_delete.deleteManager()
-
-@scheduler.scheduled_job('interval',seconds=60)
-#@twische.scheduled_job('cron',minute=13,hour=16)
-def reply_job():
-    print('***************************************')
-    #main_autoreply.autoManager()
-
-scheduler.start()
 
 if __name__ == '__main__':
     app.debug = True
