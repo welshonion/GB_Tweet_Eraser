@@ -2,9 +2,7 @@
 
 #ツイートを投稿する
 
-#import os, json, config
-#import requests
-
+#for local
 #import config
 #config.write_environ()
 

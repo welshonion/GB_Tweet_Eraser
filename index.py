@@ -2,16 +2,13 @@
 
 #ツイートを投稿する
 
-#import os, json, config
-#import requests
-
+#for local
 #import config
 #config.write_environ()
 
 import os,json
 from flask import Flask, render_template, request, redirect, url_for, session
 from requests_oauthlib import OAuth1Session
-#from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import timedelta
 
 import twitter_auth
@@ -20,7 +17,7 @@ import postTweet
 import databaseIO
 
 app = Flask(__name__)
-app.secret_key = "aaa"
+app.secret_key = os.environ['APP_SECRET_KEY']
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 #session.permanent = True
