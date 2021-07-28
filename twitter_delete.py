@@ -8,7 +8,7 @@ import os,json
 from requests_oauthlib import OAuth1Session
 from urllib.parse import parse_qsl
 import psycopg2
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import databaseIO
 
@@ -66,13 +66,18 @@ def deleteManager():
 
 def deleteUserTweet(userinfo):
 
-    session = OAuth1Session(CK, CS, userinfo[1], userinfo[2])
-
-    'checkAccessLimit():回数制限の問い合わせ'
-    checkAccessLimit(session)
-    '上で勝手にスリープまでやってくれる'
-    'getTimelines():タイムラインの取得'
-    checkFromTL(session)
+    if userinfo[3] == 1:
+        try:
+            session = OAuth1Session(CK, CS, userinfo[1], userinfo[2])
+            'checkAccessLimit():回数制限の問い合わせ'
+            checkAccessLimit(session)
+            '上で勝手にスリープまでやってくれる'
+            'getTimelines():タイムラインの取得'
+            
+        except:
+            print("session error:{}".format(userinfo[0]))
+            #databaseIO.set_value(userinfo[0], 0, userinfo[4])
+        checkFromTL(session,userinfo)
 
     return 
 
@@ -113,7 +118,7 @@ def checkAccessLimit(session):
             break
 
 
-def checkFromTL(session):
+def checkFromTL(session,userinfo):
 
     global last_tweet_id
     #global db
@@ -141,14 +146,25 @@ def checkFromTL(session):
                 print(line['id'])
 
                 if(DELETE_VERIFY_WORD in line['full_text']):
+                    JST = timezone(timedelta(hours=+9), 'JST')
+                    now=datetime.now(JST)
+                    print(now)
+                    print(line['user']['name']+'::'+line['full_text'])
+                    print(line['created_at'])
+                    created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')#%z UTCオフセット
+                    print(created_at)
+                    plus_minutes = timedelta(minutes=userinfo[4])
+                    tweettime_plus_deletetime=created_at+plus_minutes
+                    print(tweettime_plus_deletetime)
                     print(DELETE_VERIFY_WORD)
-                    delete_tweet(session,line['id'])
-
-            print(line['user']['name']+'::'+line['full_text'])
-            print(line['created_at'])
-            created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')
-            print(created_at)
-            print("***************************************")
+                    print(tweettime_plus_deletetime < now)
+                    #ツイートオフセット時刻より現在時刻のほうがあとなら
+                    if tweettime_plus_deletetime < now:
+                        print("destroy")
+                        #ツイート削除
+                        delete_tweet(session,line['id'])
+                    
+                    print("***************************************")
 
     else:
         print('Failed:%d' % res_htl.status_code)

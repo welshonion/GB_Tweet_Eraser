@@ -1,0 +1,383 @@
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+
+  font-family: "Avenir Next", Verdana,'Noto Sans JP', 'Yu Mincho Light','游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  /*font-family: 'Poiret One', cursive;
+  font-family: 'Lobster', cursive;
+  font-family: 'Oleo Script', cursive;
+  font-family: 'Unica One', cursive;
+  font-family: 'Audiowide', cursive;
+  font-family: 'Playball', cursive;
+  font-family: 'Mountains of Christmas', cursive;
+  font-family: 'Megrim', cursive;
+  font-family: 'Iceland', cursive;*/
+  
+  /*
+  font-family: "Avenir Next";
+  */
+  padding:0px;
+  margin:0px;
+  overflow-x: hidden;
+
+}
+
+li {
+  list-style: none;
+}
+
+.ad{
+  font-size:40px;
+  color: #333333;
+  text-align: center;
+}
+
+a{
+  text-decoration: none;
+  color:rgb(41, 93, 190);
+}
+
+a:hover{
+  text-decoration: underline;
+  color:rgb(41, 93, 190);
+}
+
+
+.header{
+  /*background-color:#444;*/
+  /*background: inherit;*/
+  color:#e4ebe4;
+  width:100vw;
+  height:50vw;
+  z-index:0;
+  overflow: hidden;
+  padding:0px;
+  margin:0px;
+  /*content: '';*/
+}
+
+.header::before{
+  content: '';
+  background-color:rgb(73, 78, 72);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:-2;
+  padding:0px;
+  margin:0px;
+}
+.imgheader{
+  content: '';
+  background-image:url(../images/visual.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  filter: blur(4px);
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: -4px;
+  right: -4px;
+  z-index:-1;
+  padding:0px;
+  margin:0px;
+}
+.header-logo{
+  /*float:left;*/
+  text-align:center;
+  font-size:11vw;
+  margin-top: 9vw;
+  margin-right:3vw;
+  padding:4vw 5vw 4vw 5vw;
+  position: relative;
+  font-family: 'Megrim', cursive;
+  /*font-family: "Monotype Corsiva";*/
+}
+
+/*.header-logo::before{
+  content: '';
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:-2;
+  padding:0px;
+  margin:0px;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.header-logo:hover::before{
+  content: '';
+  background-color:rgb(94, 100, 91);
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:-2;
+  padding:0px;
+  margin:0px;
+  border-radius: 2px;
+  transition: 0.5s;
+}*/
+
+.header-list{
+  /*float:right;*/
+  display: flex;
+  justify-content: center;
+  margin-right: 8vw;
+  overflow: hidden;
+
+}
+
+.header-list li{
+  color:#e4ebe4;
+  float:left;
+  font-size: 5vw;
+  padding:2vw;
+  margin:0vw 3vw;
+  position: relative;
+  font-family: 'Iceland', cursive;
+}
+
+.header-list li::before{
+  content: '';
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:-2;
+  padding:0px;
+  margin:0px;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.header-list li:hover::before{
+  content: '';
+  background-color:rgb(94, 100, 91);
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:-2;
+  padding:0px;
+  margin:0px;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+
+
+.main{
+  background-color: rgb(252, 253, 252);
+  color: rgb(34, 43, 37);
+  padding:50px 50px;
+}
+
+.main-visual{
+  font-size:80px;
+  text-align:center;
+}
+
+/*.imgvisual{
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+  overflow: hidden;
+  background-color: darkgreen;
+  background-image:url(../images/visual.png);
+  background-size:contain;  
+  background-repeat: no-repeat
+}*/
+
+.imgvisual::before{
+  /*filter: blur(8px);*/
+}
+
+.contents{
+  font-size:20px;
+  /*text-align:center;*/
+  margin-top: 20px;
+  /*text-decoration: line-through;*/
+  /*height: 5000px;*/
+}
+
+.section-title{
+  font-family: 'Iceland', cursive;
+  border-bottom: 2px solid #d9e0d9;
+  padding-bottom: 10px;
+  text-align:center;
+  font-size: 50px;
+}
+
+.section-main-block{
+  display: flex;
+}
+
+.section-main-image{
+  /*background-color: bisque;*/
+}
+
+.section-main-text{
+  /*background-color: rgb(211, 19, 195);*/
+}
+
+.imgicon{
+  width: 80%;
+  height:auto;
+  margin:10px 10px;
+  vertical-align: middle;
+}
+
+
+
+.section-work-heading {
+  font-size: 20px;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  text-align:center;
+  /*background-color: darkred;*/
+}
+
+.section-work-block {
+  /*height: 500px;*/
+  margin-top: 10px;
+  overflow:auto; 
+  /*background-color: darkgoldenrod;*/
+}
+
+.works-card {
+  width: 220px;
+  height:300px;
+  background-color:rgb(240, 243, 240);
+  float: left;
+  margin: 10px;
+  text-align:center;
+  border: 0.5px solid #777;
+  border-radius: 3px;
+}
+
+.works-title {
+  font-size: 24px;
+  margin: 0px;
+}
+
+.works-genre{
+  font-size: 10px;
+  margin:2px 0px 0px 0px;
+}
+
+.works-language{
+  font-size: 10px;
+  margin:2px 0px 0px 0px;
+}
+
+.works-description{
+  text-align:left;
+  font-size: 13px;
+  margin: 2px 30px;
+  height:70px;
+}
+
+.works-link{
+  font-size: 15px;
+  margin: 0px;
+}
+
+.works-play{
+  font-size: 15px;
+  margin: 0px;
+  margin-left:10px;
+}
+
+.image-works{
+  width: 80%;
+  height:auto;
+  margin:10px;
+  vertical-align: middle;
+}
+
+
+
+.footer {
+  background-color: rgb(59, 66, 60);
+  color: #e4ebe4;
+  height: 100px;
+  padding: 10px;
+}
+
+#footer-contact{
+  float:left;
+  /*background-color: #888;*/
+  padding: 0px;
+  height:100px;
+  border: solid 1px #e4ebe4;
+}
+.contact-index{
+  font-size: 25px;
+  /*background-color: cornflowerblue;*/
+  margin:0px;
+  font-family: 'Iceland', cursive;
+}
+.contact-list{
+  margin:0px;
+  padding:0px 10px;
+}
+.list-content{
+  /*display:inline-block;*/
+  display:flex;
+  justify-content: center;
+  padding: 0px;
+  /*background-color: rgb(255, 190, 110);*/
+  width:280px;
+  height:70px;
+}
+.list-content p{
+  margin:0px;
+  text-align: center;
+}
+.contact-list a{
+  /*background-color: rgb(105, 238, 105);*/
+  display:table-cell;
+  margin:0px;
+  text-decoration: none;
+  color:#e4ebe4;
+}
+.contact-list a:hover{
+  background-color: rgb(89, 100, 91);
+  display:table-cell;
+  margin:0px;
+  text-decoration: none;
+  color:#e4ebe4;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.twiimgicon{
+  width: 20%;
+  height:auto;
+  margin:10px 10px;
+  vertical-align: middle;
+}
+.footer-copyright{
+  float:right;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/*.footer-copyright{
+  float:right;
+  padding :10px;
+}*/
+

@@ -1,0 +1,239 @@
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+
+  font-family: "Avenir Next", Verdana,'Noto Sans JP', 'Yu Mincho Light','游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  /*font-family: 'Poiret One', cursive;
+  font-family: 'Lobster', cursive;
+  font-family: 'Oleo Script', cursive;
+  font-family: 'Unica One', cursive;
+  font-family: 'Audiowide', cursive;
+  font-family: 'Playball', cursive;
+  font-family: 'Mountains of Christmas', cursive;
+  font-family: 'Megrim', cursive;
+  font-family: 'Iceland', cursive;*/
+  
+  /*
+  font-family: "Avenir Next";
+  */
+  padding:0px;
+  margin:0px;
+  overflow-x: hidden;
+
+}
+
+li {
+  list-style: none;
+}
+
+.ad{
+  font-size:40px;
+  color: #333333;
+  text-align: center;
+}
+
+a{
+  text-decoration: none;
+  color:rgb(41, 93, 190);
+}
+
+a:hover{
+  text-decoration: underline;
+  color:rgb(41, 93, 190);
+}
+
+
+.header{
+  /*background-color:#444;*/
+  /*background: inherit;*/
+  color:#e4ebe4;
+  z-index:0;
+  overflow: hidden;
+  padding:0px;
+  margin:0px;
+  /*content: '';*/
+}
+
+.header::before{
+  content: '';
+  background-color:rgb(73, 78, 72);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:-2;
+  padding:0px;
+  margin:0px;
+}
+.header-logo{
+  /*float:left;*/
+  text-align:center;
+  font-size:5vw;
+  padding:4vw 5vw 4vw 5vw;
+  position: relative;
+  /*font-family: 'Megrim', cursive;*/
+  /*font-family: "Monotype Corsiva";*/
+}
+
+.main{
+  background-color: rgb(252, 253, 252);
+  color: rgb(34, 43, 37);
+  padding:50px 50px;
+}
+
+.main-visual{
+  font-size:80px;
+  text-align:center;
+}
+
+.contents{
+  font-size:18px;
+  /*text-align:center;*/
+  margin-top: 20px;
+  /*text-decoration: line-through;*/
+  height: 700px;
+}
+
+
+.section-title{
+  /*font-family: 'Iceland', cursive;*/
+  border-bottom: 2px solid #d9e0d9;
+  padding-bottom: 10px;
+  text-align:center;
+  font-size: 30px;
+}
+
+.section-main-block{
+  /*display: flex;*/
+}
+
+.section-main-image{
+  /*background-color: bisque;*/
+}
+
+.section-main-text{
+  /*background-color: rgb(211, 19, 195);*/
+}
+
+.section-subtitle{
+  padding: 6px 20px;
+  border-left: 2px solid rgb(34, 43, 37);
+  font-size: 18px;
+}
+
+.imgicon{
+  width: 80%;
+  height:auto;
+  margin:10px 10px;
+  vertical-align: middle;
+}
+
+
+
+.section-work-heading {
+  font-size: 20px;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  text-align:center;
+  /*background-color: darkred;*/
+}
+
+.section-work-block {
+  /*height: 500px;*/
+  margin-top: 10px;
+  overflow:auto; 
+  /*background-color: darkgoldenrod;*/
+}
+
+
+.submit {
+  font-size: 18px;
+  border: 1px solid rgb(34, 43, 37);
+  border-radius: 1px;
+  background: rgb(252, 253, 252);
+}
+
+.submit:hover {
+  color: rgb(252, 253, 252);
+  background: rgb(34, 43, 37);]
+  transition: 0.2s;
+}
+
+
+.footer {
+  background-color: rgb(59, 66, 60);
+  color: #e4ebe4;
+  height: 100px;
+  padding: 10px;
+}
+
+#footer-contact{
+  float:left;
+  /*background-color: #888;*/
+  padding: 0px;
+  height:100px;
+  border: solid 1px #e4ebe4;
+}
+.contact-index{
+  font-size: 25px;
+  /*background-color: cornflowerblue;*/
+  margin:0px;
+  font-family: 'Iceland', cursive;
+}
+.contact-list{
+  margin:0px;
+  padding:0px 10px;
+}
+.list-content{
+  /*display:inline-block;*/
+  display:flex;
+  justify-content: center;
+  padding: 0px;
+  /*background-color: rgb(255, 190, 110);*/
+  width:280px;
+  height:70px;
+}
+.list-content p{
+  margin:0px;
+  text-align: center;
+}
+.contact-list a{
+  /*background-color: rgb(105, 238, 105);*/
+  display:table-cell;
+  margin:0px;
+  text-decoration: none;
+  color:#e4ebe4;
+}
+.contact-list a:hover{
+  background-color: rgb(89, 100, 91);
+  display:table-cell;
+  margin:0px;
+  text-decoration: none;
+  color:#e4ebe4;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.twiimgicon{
+  width: 20%;
+  height:auto;
+  margin:10px 10px;
+  vertical-align: middle;
+}
+.footer-copyright{
+  position:relative;
+  float:right;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/*.footer-copyright{
+  float:right;
+  padding :10px;
+}*/
+

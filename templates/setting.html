@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GB Tweet Eraser</title>
+  <link rel="shortcut icon" href="favion.ico" type="image/ico">
+  <link rel="stylesheet" href="static/css/style.css?aafsaffdddfddsdgdfsadfdffdssfa">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Sans+JP:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Audiowide|Iceland|Lobster|Megrim|Mountains+of+Christmas|Oleo+Script|Playball|Poiret+One|Unica+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="header">
+    <section class="header-logo">グラブル救援ツイ消しツール</section>
+  </div>
+
+  <div class="main">
+    <div class="main-visual">
+      <!--div class="imgvisual">aaaa</div-->
+    </div>
+    <div class="contents">
+      {% if is_verified == True %}
+      <section class="section" id="section_setting">
+        <div class="section-title-block">
+          <h2 class="section-title">設定</h2>
+        </div>
+        <div class="section-main-block">
+          <p>{{ name }}({{ screen_name }})さん、認証完了しました</p>
+          <form action="/setting" method="post" class="setting">
+            <label for="name"></label>
+            <h3 class="section-subtitle">ツイ消し機能</h3>
+            {% if work == 'running' %}
+            <div>
+              <input type="radio" id="running" name="work" value="running" checked>
+              <label for="running">稼働</label>
+            </div>
+            <div>
+              <input type="radio" id="stop" name="work" value="stop">
+              <label for="stop">停止</label>
+            </div>
+            {% else %}
+            <div>
+              <input type="radio" id="running" name="work" value="running">
+              <label for="running">稼働</label>
+            </div>
+            <div>
+              <input type="radio" id="stop" name="work" value="stop" checked>
+              <label for="stop">停止</label>
+            </div>
+            {% endif %}
+            <div>
+              <h3 class="section-subtitle">削除待機時間</h3>
+              <p>
+                ツイートしてから削除するまでの時間を指定できます。
+                <br>極端に短いと救援に来てくれる人が減り、長いとキャッシュに残る可能性が上がります
+              </p>
+              <input id="deletetime" name="deletetime" type="range" min="10" max="90" step="10" value="{{ delete_time }}">
+              <span id="deletetime_value">{{ delete_time }}</span>
+            </div>
+    
+            <button type="submit" class="submit">保存</button>
+          </form>
+
+        </div>
+        <div class="section-title-block">
+          <h2 class="section-title">連携解除</h2>
+        </div>
+        <div class="section-main-block">
+          
+          <form action="/delete" method="post" class="setting" onSubmit="return checkDelete()">
+            <p>必要なくなれば連携を解除してください</p>
+            <button type="submit" id="delete_button" class="submit">連携解除</button>
+          </form>
+          
+
+        </div>
+      </section>
+      <p></p>
+      {% else %}
+      <p>無効な遷移です</p>
+      {% endif %}
+      
+      <p></p>
+      <p></p>
+      <a href="/">トップに戻る</a>
+      
+    </div>
+  </div>
+
+  <div class="footer">
+    <div id="footer-contact">
+      <p class=contact-index align="center">contact</p>
+      <ul class="contact-list">
+        <li class="list-content">
+          <a href="https://twitter.com/y_omo_gi" target="_blank">
+            <img class="twiimgicon" src="static/images/twittericon.png" alt="y_omo_gi" width=185 height=160>
+            twitter(@y_omo_gi)
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer-copyright">Copyright©2021 y_omo_gi</div>
+    <!--<div class="footer-logo">YwoY_Portfolio</div>-->
+  </div>
+</body>
+</html>
+
+<script>
+  function checkDelete() {
+    return confirm("登録情報が削除されますがよろしいですか");
+  }
+  var elem = document.getElementById('deletetime');
+  var target = document.getElementById('deletetime_value');
+  var rangeValue = function (elem, target) {
+    return function(evt){
+      target.innerHTML = elem.value;
+    }
+  }
+  elem.addEventListener('input', rangeValue(elem, target));
+</script>

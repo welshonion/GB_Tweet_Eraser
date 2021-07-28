@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>GB Tweet Eraser</title>
   <link rel="shortcut icon" href="favion.ico" type="image/ico">
-  <link rel="stylesheet" href="static/css/style.css?aasdffsddfaddsddfadfasffddfafdfddsdfsadfdffdssfa">
+  <link rel="stylesheet" href="static/css/style.css?aasdfssdfafdfddsdfsadfdffdssfa">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Sans+JP:400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Audiowide|Iceland|Lobster|Megrim|Mountains+of+Christmas|Oleo+Script|Playball|Poiret+One|Unica+One&display=swap" rel="stylesheet">
 </head>
@@ -19,14 +19,19 @@
       <!--div class="imgvisual">aaaa</div-->
     </div>
     <div class="contents">
-      <p>
-        グラブルの救援ツイートを一定時間後に一括削除するツールです
-        <br>【注意】β版です．恐らく問題はないですが自己責任で使用してください．
-      </p>
-      <a href="/authenticate">登録・設定変更</a>
-      
+      {% if deleted　==　True %}
+      <p>登録情報をサーバーから削除しました</p>
+      <a href="https://mag.app-liv.jp/archive/117731/">Twitter側での連携解除はこちらを参照</a>
+      <p></p>
+      {% else %}
+      <p>error</p>
+      {% endif %}
+
+      <a href="/">トップに戻る</a>
     </div>
   </div>
+
+  
 
   <div class="footer">
     <div id="footer-contact">
@@ -43,8 +48,5 @@
     <div class="footer-copyright">Copyright©2021 y_omo_gi</div>
     <!--<div class="footer-logo">YwoY_Portfolio</div>-->
   </div>
-
-  
-  
 </body>
 </html>

@@ -8,7 +8,7 @@
 import os, json
 from requests_oauthlib import OAuth1Session
 from urllib.parse import parse_qsl
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import databaseIO
 
 app = Flask(__name__)
@@ -23,15 +23,17 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 
 ##################################################################
 
+authenticate_url = "https://api.twitter.com/oauth/authenticate"
+authorize_url = "https://api.twitter.com/oauth/authorize"
 
-def user_authentication():
+oauth_callback = "http://127.0.0.1:5000/setting"
+#oauth_callback = "https://gb-tweet-eraser.herokuapp.com/setting"
 
-    #Authenticate_URLを取得
+
+def user_authorize():
+
+    #AUTHORIZE_URLを取得
     #ユーザー連携後にoauth_tokenとoauth_verifierを取得
-
-    #oauth_callback = "https://twitter.com"
-    #oauth_callback = "http://127.0.0.1:5000/verified/"
-    oauth_callback = "https://gb-tweet-eraser.herokuapp.com/verified/"
 
     twitter = OAuth1Session(CK,CS)
     request_token_url = "https://api.twitter.com/oauth/request_token"
@@ -43,15 +45,32 @@ def user_authentication():
 
     request_token = dict(parse_qsl(response.content.decode("utf-8")))
 
-    authenticate_url = "https://api.twitter.com/oauth/authenticate"
-    authorize_url = "https://api.twitter.com/oauth/authorize"
-
     authorize_endpoint = "{}?oauth_token={}".format(authorize_url,request_token['oauth_token'])
 
     print(authorize_endpoint)
 
-    return authorize_endpoint # Googleにリダイレクトする
+    return authorize_endpoint
 
+def user_authenticate():
+
+    #Authenticate_URLを取得
+    #ユーザー連携後にoauth_tokenとoauth_verifierを取得
+
+    twitter = OAuth1Session(CK,CS)
+    request_token_url = "https://api.twitter.com/oauth/request_token"
+
+    response = twitter.post(
+        request_token_url,
+        params={'oauth_callback':oauth_callback}
+    )
+
+    request_token = dict(parse_qsl(response.content.decode("utf-8")))
+
+    authenticate_endpoint = "{}?oauth_token={}".format(authenticate_url,request_token['oauth_token'])
+
+    print(authenticate_endpoint)
+
+    return authenticate_endpoint
 
 def user_verified():
 
@@ -78,14 +97,14 @@ def user_verified():
 
     access_token = dict(parse_qsl(response.content.decode('utf-8')))
 
-    print(access_token)
+    print("get access_token")
 
 
     AT = access_token['oauth_token']
     ATS = access_token['oauth_token_secret']
     USER_ID = access_token['user_id']
 
-    databaseIO.auth_adduser(USER_ID, AT, ATS, 30)
+    databaseIO.auth_adduser(USER_ID, AT, ATS, 1, 30)
 
 
     twitter = OAuth1Session(CK, CS, AT, ATS)
@@ -101,14 +120,18 @@ def user_verified():
     screen_name = ""
 
     if response.status_code == 200:
-        name = results['name']
-        screen_name = results['screen_name']
-        is_verified = True
+        session['is_verified'] = True
+        session['name'] = results['name']
+        session['screen_name'] = results['screen_name']
+        session['user_id'] = USER_ID
+        return True
     else:
         print("Failed:%d" %response.status_code)
+        return False
 
     #return redirect('http://127.0.0.1:5000/')
-    return is_verified,name,screen_name
+    return False
+
 
 @app.route('/')
 def index():

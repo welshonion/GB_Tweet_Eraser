@@ -43,4 +43,4 @@ def get():
 
 #get()
 
-deleteall()
+drop()
