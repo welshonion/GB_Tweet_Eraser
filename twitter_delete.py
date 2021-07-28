@@ -142,21 +142,21 @@ def checkFromTL(session,userinfo):
         for line in timelines:
             if(DELETE_WORD in line['full_text']):
                 
-                print(DELETE_WORD)
-                print(line['id'])
+                #print(DELETE_WORD)
 
                 if(DELETE_VERIFY_WORD in line['full_text']):
                     JST = timezone(timedelta(hours=+9), 'JST')
                     now=datetime.now(JST)
                     print(now)
+                    print(line['id'])
                     print(line['user']['name']+'::'+line['full_text'])
-                    print(line['created_at'])
+                    #print(line['created_at'])
                     created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')#%z UTCオフセット
                     print(created_at)
                     plus_minutes = timedelta(minutes=userinfo[4])
                     tweettime_plus_deletetime=created_at+plus_minutes
                     print(tweettime_plus_deletetime)
-                    print(DELETE_VERIFY_WORD)
+                    #print(DELETE_VERIFY_WORD)
                     print(tweettime_plus_deletetime < now)
                     #ツイートオフセット時刻より現在時刻のほうがあとなら
                     if tweettime_plus_deletetime < now:

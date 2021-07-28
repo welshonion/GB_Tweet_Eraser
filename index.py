@@ -132,9 +132,7 @@ def setting():
     work = userinfo[3]
     delete_time = userinfo[4]
 
-    print(work)
-    print(w[work])
-    print(delete_time)
+    print(name)
 
     return render_template('setting.html',is_verified = is_verified,name=name,screen_name=screen_name,work=w[work],delete_time=delete_time)
 
