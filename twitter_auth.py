@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 #OauthTokenを取得
-#仮想環境のアクティベート忘れずに
-
-#import config
 
 import os, json
 from requests_oauthlib import OAuth1Session
@@ -18,8 +15,6 @@ app = Flask(__name__)
 
 CK = os.environ.get('CONSUMER_KEY', '0')
 CS = os.environ.get('CONSUMER_SECRET', '0')
-#CK = config.CONSUMER_KEY
-#CS = config.CONSUMER_SECRET
 
 ##################################################################
 
@@ -141,13 +136,3 @@ def index():
 
 if __name__ == '__main__':
     app.run()
-
-
-#ログインした状態でURLにアクセスし
-#config.pyのOAUTH_TOKEN、OAUTH_VERIFIERを更新
-
-
-
-#with open(TOKEN_PATH, mode='w') as f:
-#    json.dump(token,f,indent=4)
-#f.close()

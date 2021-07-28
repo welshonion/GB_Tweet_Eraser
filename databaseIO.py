@@ -1,14 +1,4 @@
 # -*- coding: utf-8 -*-
-#import sqlite3
-#import psycopg2
-
-
-#import json, datetime, time, sys, os, re
-#from requests_oauthlib import OAuth1Session
-#from urllib.parse import parse_qsl
-#from abc import ABCMeta, abstractmethod
-#from glob import iglob
-#import psycopg2
 
 import os
 import psycopg2
@@ -25,9 +15,6 @@ def auth_adduser(user_id, at, ats, work, delete_time):
     
     cursor.execute(sql)
     db.commit()
-
-
-
 
     upsert = 'INSERT INTO userinfo (user_id, at, ats, work, deletetime) \
     VALUES (%s,%s,%s,%s,%s) \
@@ -134,8 +121,3 @@ def auth_drop():
     #db.close()
 
     return
-
-
-
-#if __name__ == '__main__':
-#    func_delete()

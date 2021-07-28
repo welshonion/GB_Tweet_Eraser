@@ -21,33 +21,16 @@ app.secret_key = os.environ['APP_SECRET_KEY']
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 #session.permanent = True
-
 #scheduler = BackgroundScheduler(daemon = True)
 
-#app.config['SECRET_KEY'] = os.urandom(24)
-
-"""TOKEN_PATH= 'token.json'
-
-with open(TOKEN_PATH, mode='r') as f:
-    token=json.load(f)
-f.close()"""
 
 ##################################################################
 ## トークン関連
 
 CK = os.environ.get('CONSUMER_KEY', '0')
 CS = os.environ.get('CONSUMER_SECRET', '0')
-#CK = config.CONSUMER_KEY
-#CS = config.CONSUMER_SECRET
-
-#AT = token["ACCESS_TOKEN"]
-#ATS = token["ACCESS_TOKEN_SECRET"]
-#USER_ID = token["USER_ID"]
 
 ##################################################################
-
-#twitter = OAuth1Session(CK, CS, AT, ATS)
-posttweet_url = 'https://api.twitter.com/1.1/statuses/update.json'
 
 is_verified = False
 name = ""
@@ -91,41 +74,8 @@ def authenticate():
 
     return redirect(authenticate_url)
 
-    #return #render_template('tweet.html',message=message,title=title)"""
+    #return #render_template('tweet.html',message=message,title=title)
 """
-import requests
-import json
-
-#POST先URL
-url = "POST送信するURL"
-
-#JSON形式のデータ
-jsonData = {
-    "col1": "val1",
-    "col2": "val2"
-}    
-
-#POST送信
-response = requests.post(
-    url,
-    data = json.dumps(jsonData)    #dataを指定する
-    )
-
-resDatas = response.json()
-
-
-#データ取得
-import json
-
-param = json.loads(request.data.decode('utf-8'))
-
-col1 = param.get('col1')
-col2 = param.get('col2')
-"""
-#http://127.0.0.1:5000/setting
-# ?oauth_token=ZewMNwAAAAABRoM2AAABeuc-QP0&oauth_verifier=PGPg94eia09PxwrAujJrE27Ofy2IOzl3
-
-
 
 @app.route('/setting', methods=['GET','POST'])
 def setting():
@@ -186,8 +136,6 @@ def setting():
     print(w[work])
     print(delete_time)
 
-
-    #return redirect('http://127.0.0.1:5000/')
     return render_template('setting.html',is_verified = is_verified,name=name,screen_name=screen_name,work=w[work],delete_time=delete_time)
 
 
@@ -203,71 +151,7 @@ def delete():
 
     return render_template('delete.html',deleted=False)
 
-
-    """title='ツイート'
-    if request.method == 'POST':
-        #リクエストフォームから「名前」を取得して
-        tweettext = request.form['formtweettext']
-        params = {"status":tweettext}
-
-        response = twitter.post(posttweet_url,params = params)
-
-        if response.status_code == 200:
-            #index.htmlをレンダリングする
-            return render_template('tweet.html',
-            name=tweettext,title=title)
-        else:
-            message = '投稿失敗（エラーコード：'+ response.status_code +')'
-            return render_template('tweet.html',
-            message=message,title=title)
-    else:
-        #ERRORでリダイレクトする場合
-        return redirect(url_for('index'))"""
-
-
 if __name__ == '__main__':
     #app.debug = True
     app.run(threaded=True)
     
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-"""@app.route('/tweet')
-def index():
-    title = 'ようこそ'
-    message = 'ツイート内容を入力してください'
-    return render_template('tweet.html',
-    message=message,title=title)"""
-
-"""@app.route('/post', methods=['GET','POST'])
-def post():
-    title='ツイート'
-    if request.method == 'POST':
-        #リクエストフォームから「名前」を取得して
-        tweettext = request.form['formtweettext']
-        params = {"status":tweettext}
-
-        response = twitter.post(posttweet_url,params = params)
-
-        if response.status_code == 200:
-            #index.htmlをレンダリングする
-            return render_template('tweet.html',
-            name=tweettext,title=title)
-        else:
-            message = '投稿失敗（エラーコード：'+ response.status_code +')'
-            return render_template('tweet.html',
-            message=message,title=title)
-    else:
-        #ERRORでリダイレクトする場合
-        return redirect(url_for('index'))"""
-

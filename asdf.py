@@ -8,11 +8,6 @@ config.write_environ()
 
 import databaseIO
 
-#databaseIO.auth_adduser()
-#at,ats,delete_time=databaseIO.auth_checkuser(1295339873411325952)
-
-#print("{}, {}, {}".format(at,ats,delete_time))
-
 def add():
     databaseIO.auth_adduser("123456789","asdf-asdf","asdf",12)
     return
