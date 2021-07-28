@@ -46,17 +46,18 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 #twitter = OAuth1Session(CK, CS, AT, ATS)
 posttweet_url = 'https://api.twitter.com/1.1/statuses/update.json'
 
-@scheduler.scheduled_job('interval',minutes=1)
+@scheduler.scheduled_job('interval',minutes=5)
 #@twische.scheduled_job('cron',minute=13,hour=16)
 def delete_job():
     print('twitter_delete.deleteManager()')
     twitter_delete.deleteManager()
-
+"""
 @scheduler.scheduled_job('interval',seconds=60)
 #@twische.scheduled_job('cron',minute=13,hour=16)
 def reply_job():
     print('***************************************')
     #main_autoreply.autoManager()
+"""
 
 scheduler.start()
 

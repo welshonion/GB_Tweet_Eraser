@@ -26,8 +26,8 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 authenticate_url = "https://api.twitter.com/oauth/authenticate"
 authorize_url = "https://api.twitter.com/oauth/authorize"
 
-oauth_callback = "http://127.0.0.1:5000/setting"
-#oauth_callback = "https://gb-tweet-eraser.herokuapp.com/setting"
+#oauth_callback = "http://127.0.0.1:5000/setting"
+oauth_callback = "https://gb-tweet-eraser.herokuapp.com/setting"
 
 
 def user_authorize():
