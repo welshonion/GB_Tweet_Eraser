@@ -148,7 +148,8 @@ def checkFromTL(session,userinfo):
                     JST = timezone(timedelta(hours=+9), 'JST')
                     now=datetime.now(JST)
                     print(now)
-                    print(line['id'])
+                    print(userinfo[0])
+                    #print(line['id'])
                     print(line['user']['name']+'::'+line['full_text'])
                     #print(line['created_at'])
                     created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')#%z UTCオフセット
