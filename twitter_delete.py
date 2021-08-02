@@ -52,8 +52,10 @@ last_tweet_id = 0
 
 database = []
 
+global now
+
 def deleteManager():
-    global database
+    global database,now
 
     #データベースからユーザー情報を取得して格納
     database = databaseIO.auth_getalluser()
@@ -110,9 +112,6 @@ def checkAccessLimit(session):
         remaining = int(res_cl_text['resources']['statuses']['/statuses/home_timeline']['remaining'])
         reset = int(res_cl_text['resources']['statuses']['/statuses/home_timeline']['reset'])
 
-        print('remaining:%d' % remaining)
-        print('reset:%d' % reset)
-
         print('remaining:{},reset:{}'.format(remaining,reset))
 
         '残りの時間が0ならリセットまで待つ:waitUntilReset(reset)'
@@ -152,6 +151,7 @@ def checkFromTL(session,userinfo):
 
                 if(DELETE_VERIFY_WORD in line['full_text']):
                     
+                    print(now)
                     print(userinfo[0])
                     #print(line['id'])
                     print(line['user']['name']+'::'+line['full_text'])
