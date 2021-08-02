@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#ツイートを投稿する
-
 #for local
 #import config
 #config.write_environ()
