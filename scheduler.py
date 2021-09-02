@@ -27,7 +27,6 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 
 @scheduler.scheduled_job('interval',minutes=5)
 def delete_job():
-    print('twitter_delete.deleteManager()')
     twitter_delete.deleteManager()
 
 scheduler.start()

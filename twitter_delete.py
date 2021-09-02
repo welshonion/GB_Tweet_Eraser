@@ -62,11 +62,13 @@ def deleteManager():
 
     JST = timezone(timedelta(hours=+9), 'JST')
     now=datetime.now(JST)
-    print(now)
+    print("{}".format(now))
 
     #各ユーザーに対してユーザータイムラインを確認して削除
     for row in database:
         deleteUserTweet(row)
+
+    print("")
 
     return
 
@@ -112,7 +114,10 @@ def checkAccessLimit(session):
         remaining = int(res_cl_text['resources']['statuses']['/statuses/home_timeline']['remaining'])
         reset = int(res_cl_text['resources']['statuses']['/statuses/home_timeline']['reset'])
 
-        print('remaining:{},reset:{}'.format(remaining,reset))
+        if remaining != 15:
+            print('not max value  remaining:{},reset:{}'.format(remaining,reset))
+        else:
+            print("*", end=' ')
 
         '残りの時間が0ならリセットまで待つ:waitUntilReset(reset)'
         'それ以外ならbreak'
@@ -151,6 +156,7 @@ def checkFromTL(session,userinfo):
 
                 if(DELETE_VERIFY_WORD in line['full_text']):
                     
+                    print("")
                     print(now)
                     print(userinfo[0])
                     #print(line['id'])
