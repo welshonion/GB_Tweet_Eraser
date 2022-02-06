@@ -84,7 +84,7 @@ def deleteUserTweet(userinfo):
             
         except:
             print("session error:{}".format(userinfo[0]))
-            #databaseIO.set_value(userinfo[0], 0, userinfo[4])
+            databaseIO.set_value(userinfo[0], 0, userinfo[4])
         checkFromTL(session,userinfo)
 
     return 
@@ -97,6 +97,7 @@ def checkAccessLimit(session):
         '正常でないならERROR'
         if res_cl.status_code == 503:
             if unavailableCnt > 3:
+                print('Twitter API error %d' % res_cl.status_code)
                 raise Exception('Twitter API error %d' % res_cl.status_code)
             unavailableCnt += 1
             print('Service Unavailable 503')
@@ -106,7 +107,8 @@ def checkAccessLimit(session):
         unavailableCnt = 0
 
         if res_cl.status_code != 200:
-            raise Exeprion('Twitter API error %d' % res_cl.status_code)
+            print('Twitter API error %d' % res_cl.status_code)
+            raise Exception('Twitter API error %d' % res_cl.status_code)
 
         '正常ならセッションから残り回数とリセット時間をintで取得'
 
