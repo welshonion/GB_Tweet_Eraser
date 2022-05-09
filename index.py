@@ -106,6 +106,8 @@ def setting():
             else:
                 work_value = 0
 
+            print("asdf")
+
             delete_list = 0
 
             if(request.form["deleteword_id"]):
@@ -120,7 +122,7 @@ def setting():
             delete_word = request.form["deleteword_free_text"]
 
 
-            databaseIO.set_value(session['user_id'], work_value, request.form["deletetime"], delete_list, request.form["deleteword_free_text"])
+            databaseIO.set_value(session['user_id'], work_value, request.form["deletetime"], delete_list, delete_word)
 
             print(request.form["work"])
             print(request.form["deletetime"])
