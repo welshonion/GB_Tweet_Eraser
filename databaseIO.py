@@ -7,20 +7,20 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
 
-def auth_adduser(user_id, at, ats, work, delete_time):
+def auth_adduser(user_id, at, ats, work, delete_time, delete_list, delete_word):
     #db = psycopg2.connect(DATABASE_URL, sslmode = 'require')
     cursor = db.cursor()
 
-    sql = 'CREATE TABLE IF NOT EXISTS userinfo (user_id varchar(60) unique,at varchar(60),ats varchar(60),work int,deletetime int);'
+    sql = 'CREATE TABLE IF NOT EXISTS userinfo (user_id varchar(60) unique,at varchar(60),ats varchar(60),work int,deletetime int,deletelist int,deleteword varchar(256));'
     
     cursor.execute(sql)
     db.commit()
 
-    upsert = 'INSERT INTO userinfo (user_id, at, ats, work, deletetime) \
-    VALUES (%s,%s,%s,%s,%s) \
+    upsert = 'INSERT INTO userinfo (user_id, at, ats, work, deletetime, deletelist, deleteword) \
+    VALUES (%s,%s,%s,%s,%s,%s,%s) \
     ON CONFLICT (user_id) \
     DO UPDATE SET at=%s, ats=%s;'
-    upsert_param = [user_id, at, ats, work, delete_time, at, ats]
+    upsert_param = [user_id, at, ats, work, delete_time, delete_list, delete_word, at, ats]
 
     cursor.execute(upsert,upsert_param)
     db.commit()
@@ -57,14 +57,14 @@ def get_value(user_id):
             return row
     return None
 
-def set_value(user_id, work, delete_time):
+def set_value(user_id, work, delete_time, delete_list, delete_word):
     cursor = db.cursor()
 
     update = 'UPDATE userinfo \
-    SET work=%s, deletetime=%s \
+    SET work=%s, deletetime=%s, deletelist=%s, deleteword=%s \
     WHERE user_id=%s;'
 
-    cursor.execute(update,[work,delete_time,user_id])
+    cursor.execute(update,[work,delete_time,delete_list,delete_word,user_id])
     db.commit()
 
     return

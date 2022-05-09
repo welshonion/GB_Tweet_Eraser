@@ -48,18 +48,74 @@
               <label for="stop">停止</label>
             </div>
             {% endif %}
+
             <div>
               <h3 class="section-subtitle">削除待機時間</h3>
               <p>
-                ツイートしてから削除するまでの時間を指定できます。
-                <br>極端に短いと救援に来てくれる人が減り、長いとキャッシュに残る可能性が上がります
-                <br>また最長5分の誤差があります
+                ツイートしてから削除するまでの時間を指定できます．
+                <br>極端に短いと救援に来てくれる人が減り、長いとキャッシュに残る可能性が上がります．
+                <br>また最長5分の誤差があります.
               </p>
               <input id="deletetime" name="deletetime" type="range" min="10" max="90" step="10" value="{{ delete_time }}">
               <span id="deletetime_value">{{ delete_time }}</span>
             </div>
+
+            <div>
+              <h3 class="section-subtitle">削除単語</h3>
+              <p>
+                削除するツイートを選べます．
+                <br>フリーワードをオンにすると削除する単語を指定できます．
+              </p>
+
+              {% if deleteword_id == 1 %}
+              <div>
+                <input type="checkbox" id="deleteword_id" name="deleteword_id" checked>
+                <label for="deleteword_id">参戦ID</label>
+              </div>
+              {% else %}
+              <div>
+                <input type="checkbox" id="deleteword_id" name="deleteword_id">
+                <label for="deleteword_id">参戦ID</label>
+              </div>
+              {% endif %}
+
+              {% if deleteword_rpg == 1 %}
+              <div>
+                <input type="checkbox" id="deleteword_rpg" name="deleteword_rpg" checked>
+                <label for="deleteword_rpg">AP・BP全回復</label>
+              </div>
+              {% else %}
+              <div>
+                <input type="checkbox" id="deleteword_rpg" name="deleteword_rpg">
+                <label for="deleteword_rpg">AP・BP全回復</label>
+              </div>
+              {% endif %}
+
+              {% if deleteword_free == 1 %}
+              <div>
+                <input type="checkbox" id="deleteword_free" name="deleteword_free" checked>
+                <label for="deleteword_free">フリーワード</label>
+              </div>
+              {% else %}
+              <div>
+                <input type="checkbox" id="deleteword_free" name="deleteword_free">
+                <label for="deleteword_free">フリーワード</label>
+              </div>
+              {% endif %}
+
+            </div>
+
+            <div>
+              <h3 class="section-subtitle">フリーワード設定</h3>
+              <p>
+                4字以上100字以下
+              </p>
+
+              <input type="text" id="deleteword_free_text" name="deleteword_free_text" value="{{ deleteword_free_text_pre }}" placeholder="4字以上100字以下" required minlength="4" maxlength="100" size="100">
+
+            </div>
     
-            <button type="submit" class="submit">保存</button>
+            <button type="submit" class="submit">設定を保存</button>
           </form>
 
         </div>

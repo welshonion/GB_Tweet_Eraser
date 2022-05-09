@@ -32,8 +32,10 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 
 ##################################################################
 
-DELETE_WORD = '参戦ID'
-DELETE_VERIFY_WORD = '参加者募集'
+DELETE_WORD_ID = '参戦ID'
+DELETE_WORD_SANKASYA = '参加者募集'
+DELETE_WORD_RPG = 'スマホRPGはいまこれをやってるよ'
+
 
 'urlをあらかじめ取得しておく'
 
@@ -86,7 +88,7 @@ def deleteUserTweet(userinfo):
             
         except:
             print("session error:{}".format(userinfo[0]))
-            #databaseIO.set_value(userinfo[0], 0, userinfo[4])
+            #databaseIO.set_value(userinfo[0], 0, userinfo[4], userinfo[5],userinfo[6])
         
 
     return 
@@ -151,14 +153,14 @@ def checkFromTL(session,userinfo):
     if res_htl.status_code == 200:
         timelines = json.loads(res_htl.text)
 
-        firstline  = True
 
         for line in timelines:
-            if(DELETE_WORD in line['full_text']):
+            # 参戦IDチェック
+            if userinfo[5]%2==1 and (DELETE_WORD_ID in line['full_text']):
                 
                 #print(DELETE_WORD)
 
-                if(DELETE_VERIFY_WORD in line['full_text']):
+                if(DELETE_WORD_SANKASYA in line['full_text']):
                     
                     print("")
                     print(now)
@@ -180,6 +182,61 @@ def checkFromTL(session,userinfo):
                         delete_tweet(session,line['id'])
                     
                     print("***************************************")
+
+            # 回復チェック
+            if int((userinfo[5]%4)/2)==1:
+                
+
+                if(DELETE_WORD_RPG in line['full_text']):
+                    
+                    print("")
+                    print(now)
+                    print(userinfo[0])
+                    #print(line['id'])
+                    print(line['user']['name']+'::'+line['full_text'])
+                    #print(line['created_at'])
+                    created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')#%z UTCオフセット
+                    print(created_at)
+                    plus_minutes = timedelta(minutes=userinfo[4])
+                    tweettime_plus_deletetime=created_at+plus_minutes
+                    print(tweettime_plus_deletetime)
+                    #print(DELETE_VERIFY_WORD)
+                    print(tweettime_plus_deletetime < now)
+                    #ツイートオフセット時刻より現在時刻のほうがあとなら
+                    if tweettime_plus_deletetime < now:
+                        print("destroy")
+                        #ツイート削除
+                        delete_tweet(session,line['id'])
+                    
+                    print("***************************************")
+
+            # 任意単語チェック
+            if int(userinfo[5]/4)==1:
+                
+
+                if(userinfo[6] in line['full_text']) and (userinfo[6] != ''):
+                    
+                    print("")
+                    print(now)
+                    print(userinfo[0])
+                    #print(line['id'])
+                    print(line['user']['name']+'::'+line['full_text'])
+                    #print(line['created_at'])
+                    created_at = datetime.strptime(line['created_at'], '%a %b %d %H:%M:%S %z %Y')#%z UTCオフセット
+                    print(created_at)
+                    plus_minutes = timedelta(minutes=userinfo[4])
+                    tweettime_plus_deletetime=created_at+plus_minutes
+                    print(tweettime_plus_deletetime)
+                    #print(DELETE_VERIFY_WORD)
+                    print(tweettime_plus_deletetime < now)
+                    #ツイートオフセット時刻より現在時刻のほうがあとなら
+                    if tweettime_plus_deletetime < now:
+                        print("destroy free word")
+                        #ツイート削除
+                        #delete_tweet(session,line['id'])
+                    
+                    print("***************************************")
+
 
     else:
         print('Failed:%d' % res_htl.status_code)

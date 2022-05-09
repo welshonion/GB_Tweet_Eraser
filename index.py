@@ -106,7 +106,21 @@ def setting():
             else:
                 work_value = 0
 
-            databaseIO.set_value(session['user_id'], work_value, request.form["deletetime"])
+            delete_list = 0
+
+            if(request.form["deleteword_id"]):
+                delete_list += 1
+
+            if(request.form["deleteword_rpg"]):
+                delete_list += 2
+
+            if(request.form["deleteword_free"]):
+                delete_list += 4
+
+            delete_word = request.form["deleteword_free_text"]
+
+
+            databaseIO.set_value(session['user_id'], work_value, request.form["deletetime"], delete_list, request.form["deleteword_free_text"])
 
             print(request.form["work"])
             print(request.form["deletetime"])
@@ -130,9 +144,16 @@ def setting():
     work = userinfo[3]
     delete_time = userinfo[4]
 
+    deleteword_id = userinfo[5]%2
+    deleteword_rpg = int((userinfo[5]%4)/2)
+    deleteword_free = int(userinfo[5]/4)
+
+    deleteword_free_text_pre = userinfo[6]
+
     print(name)
 
-    return render_template('setting.html',is_verified = is_verified,name=name,screen_name=screen_name,work=w[work],delete_time=delete_time)
+    return render_template('setting.html',is_verified = is_verified,name=name,screen_name=screen_name,work=w[work],delete_time=delete_time,\
+        deleteword_id=deleteword_id,deleteword_rpg=deleteword_rpg,deleteword_free=deleteword_free,deleteword_free_text_pre=deleteword_free_text_pre)
 
 
 @app.route('/delete', methods=['GET','POST'])
