@@ -110,13 +110,13 @@ def setting():
 
             delete_list = 0
 
-            if(request.form["deleteword_id"]):
+            if(request.POST["deleteword_id"]):
                 delete_list += 1
 
-            if(request.form["deleteword_rpg"]):
+            if(request.POST["deleteword_rpg"]):
                 delete_list += 2
 
-            if(request.form["deleteword_free"]):
+            if(request.POST["deleteword_free"]):
                 delete_list += 4
 
             delete_word = request.form["deleteword_free_text"]
