@@ -15,7 +15,7 @@ import postTweet
 
 app = Flask(__name__)
 
-scheduler = BackgroundScheduler(daemon = True)
+scheduler = BackgroundScheduler(daemon = True,job_defaults={'max_instances': 5})
 
 ##################################################################
 ## トークン関連

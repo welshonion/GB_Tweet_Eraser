@@ -81,11 +81,13 @@ def deleteUserTweet(userinfo):
             checkAccessLimit(session)
             '上で勝手にスリープまでやってくれる'
             'getTimelines():タイムラインの取得'
+
+            checkFromTL(session,userinfo)
             
         except:
             print("session error:{}".format(userinfo[0]))
-            databaseIO.set_value(userinfo[0], 0, userinfo[4])
-        checkFromTL(session,userinfo)
+            #databaseIO.set_value(userinfo[0], 0, userinfo[4])
+        
 
     return 
 
