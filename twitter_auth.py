@@ -99,7 +99,7 @@ def user_verified():
     ATS = access_token['oauth_token_secret']
     USER_ID = access_token['user_id']
 
-    databaseIO.auth_adduser(USER_ID, AT, ATS, 1, 30)
+    databaseIO.auth_adduser(USER_ID, AT, ATS, 1, 30, 1, "gbtweeteraserloremipsumdolorsitametconsecteturadipiscingelit")
 
 
     twitter = OAuth1Session(CK, CS, AT, ATS)
