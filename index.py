@@ -152,8 +152,7 @@ def setting():
 
     print(name)
 
-    return render_template('setting.html',is_verified = is_verified,name=name,screen_name=screen_name,work=w[work],delete_time=delete_time,\
-        deleteword_id=deleteword_id,deleteword_rpg=deleteword_rpg,deleteword_free=deleteword_free,deleteword_free_text_pre=deleteword_free_text_pre)
+    return render_template('setting.html',is_verified = is_verified,name=name,screen_name=screen_name,work=w[work],delete_time=delete_time, deleteword_id=deleteword_id,deleteword_rpg=deleteword_rpg,deleteword_free=deleteword_free,deleteword_free_text_pre=deleteword_free_text_pre)
 
 
 @app.route('/delete', methods=['GET','POST'])
