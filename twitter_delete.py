@@ -204,7 +204,7 @@ def checkFromTL(session,userinfo):
                     print(tweettime_plus_deletetime < now)
                     #ツイートオフセット時刻より現在時刻のほうがあとなら
                     if tweettime_plus_deletetime < now:
-                        print("destroy")
+                        print("destroy ap word")
                         #ツイート削除
                         delete_tweet(session,line['id'])
                     
@@ -233,7 +233,7 @@ def checkFromTL(session,userinfo):
                     if tweettime_plus_deletetime < now:
                         print("destroy free word")
                         #ツイート削除
-                        #delete_tweet(session,line['id'])
+                        delete_tweet(session,line['id'])
                     
                     print("***************************************")
 
