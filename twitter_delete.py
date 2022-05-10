@@ -34,7 +34,7 @@ CS = os.environ.get('CONSUMER_SECRET', '0')
 
 DELETE_WORD_ID = '参戦ID'
 DELETE_WORD_SANKASYA = '参加者募集'
-DELETE_WORD_RPG = 'スマホRPGはいまこれをやってるよ'
+DELETE_WORD_RPG = 'スマホRPGは今これをやってるよ'
 
 
 'urlをあらかじめ取得しておく'
